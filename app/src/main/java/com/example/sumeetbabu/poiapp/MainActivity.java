@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 // instantiate the location manager, note you will need to request permissions in your manifest
                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 // get the last know location from your location manager.
-                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 // now get the lat/lon from the location and do something with it.
                 printGPS(location.getLatitude(), location.getLongitude());
             }
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void printGPS(double lat, double lon) {
-        Log.i("GPS Coords", (lat + "   " + lon).toString());
+        Log.i("GPS Coords", (lat + "   " + lon));
         TextView GPSText = (TextView)findViewById(R.id.GPSCoords);
         GPSText.setText("Latitude: " + lat + "   Longitude:" + lon);
 
