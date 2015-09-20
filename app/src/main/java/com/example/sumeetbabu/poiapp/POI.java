@@ -3,6 +3,8 @@ package com.example.sumeetbabu.poiapp;
 import android.location.Location;
 import android.media.Image;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -15,6 +17,11 @@ public class POI {
     private Location location;
     private Image location_pic;
     private String creator;
+
+    public POI() {
+        this.createdate = Calendar.getInstance().getTime();
+
+    }
 
     public String getName() { return name; }
 

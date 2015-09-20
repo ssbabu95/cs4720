@@ -60,13 +60,18 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onNewClick(View v) {
+    public void onNewPOIClick(View v) {
         EditText q = (EditText) findViewById(R.id.editText);
         String newPOIname = q.getText().toString();
-        Intent i = new Intent(this, create_poi.class);
-        i.putExtra("newPOIname", newPOIname);
-        startActivity(i);
-        // Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+        if(newPOIname.equals("")) {
+            Toast.makeText(getBaseContext(), "Please enter a name", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Intent i = new Intent(this, create_poi.class);
+            i.putExtra("newPOIname", newPOIname);
+            startActivity(i);
+            // Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void printGPS(double lat, double lon) {

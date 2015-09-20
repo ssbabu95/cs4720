@@ -12,10 +12,12 @@ public class create_poi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Create New POI");
         setContentView(R.layout.activity_create_poi);
         Intent intent = getIntent();
         String POIname = intent.getExtras().getString("newPOIname");
         Toast.makeText(getBaseContext(), POIname, Toast.LENGTH_SHORT).show();
+        POI new_poi = new POI();
     }
 
     @Override
