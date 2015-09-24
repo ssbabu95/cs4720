@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // instantiate the location manager, note you will need to request permissions in your manifest
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 // now get the lat/lon from the location and do something with it.
                 printGPS(location.getLatitude(), location.getLongitude());
             }
-        });
+        }); */
 
         //lay = (RelativeLayout) findViewById(R.id.rellay);
     }
@@ -74,13 +74,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void printGPS(double lat, double lon) {
+    /*public void printGPS(double lat, double lon) {
         Log.i("GPS Coords", (lat + "   " + lon));
         TextView GPSText = (TextView)findViewById(R.id.GPSCoords);
         GPSText.setText("Latitude: " + lat + "   Longitude:" + lon);
 
 
-    }
+    }*/
 
 
 
