@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- inherit from the material theme -->
+    <style name="AppTheme" parent="android:Theme.Material">
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">#D32F2F</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">#B71C1C</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">#FFEBEE</item>
+        <item name="android:colorButtonNormal">#D32F2F</item>
+    </style>
+
+    <style name="BorderlessButton" parent="android:Widget.Material.Button">
+        <item name="android:colorAccent">#FFEBEE</item>
+        <item name="android:layout_margin">0dp</item>
+
+
+
+    </style>
+
+
+</resources>

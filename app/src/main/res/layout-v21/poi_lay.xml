@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/adaptLay">
+        <ImageView
+            android:id="@+id/showImg"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="left"
+            android:contentDescription="poiThumb"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/showCreator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Creator"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_toRightOf="@+id/showImg"
+            android:layout_alignLeft="@+id/showName"
+            android:layout_alignStart="@+id/showName"
+            android:layout_below="@+id/showName"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/showDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_toRightOf="@+id/showImg"
+            android:layout_alignLeft="@+id/showName"
+            android:layout_alignStart="@+id/showName"
+            android:layout_below="@+id/showCreator"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/showName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_toRightOf="@+id/showImg"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="200dp"/>
+
+        <TextView
+            android:id="@+id/showLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_toRightOf="@+id/showImg"
+            android:layout_alignLeft="@+id/showName"
+            android:layout_alignStart="@+id/showName"
+            android:layout_below="@+id/showDate"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Name:"
+            android:id="@+id/nameLabl"
+            android:layout_toRightOf="@+id/showImg"
+            android:layout_alignBottom="@+id/showName"
+            android:layout_marginLeft="100dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Creator:"
+            android:id="@+id/creatorLabl"
+            android:layout_toRightOf="@+id/showImg"
+            android:layout_alignBottom="@+id/showCreator"
+            android:layout_marginLeft="100dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Date:"
+            android:id="@+id/dateLabl"
+            android:layout_toRightOf="@+id/showImg"
+            android:layout_alignBottom="@+id/showDate"
+            android:layout_marginLeft="100dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Location:"
+            android:id="@+id/locationLabl"
+            android:layout_toRightOf="@+id/showImg"
+            android:layout_alignBottom="@+id/showLocation"
+            android:layout_marginLeft="100dp" />
+
+</RelativeLayout>

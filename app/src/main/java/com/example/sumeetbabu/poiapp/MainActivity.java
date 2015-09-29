@@ -1,20 +1,16 @@
 package com.example.sumeetbabu.poiapp;
 
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.content.*;
 import android.widget.Toast;
-import android.view.View;
-import android.widget.*;
-import android.content.DialogInterface.*;
-import android.location.*;
-import android.widget.AbsListView.*;
 import android.view.*;
+import android.widget.*;
+import android.location.*;
+import android.app.*;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     LocationManager locationManager;
     LocationListener locationListener;
@@ -24,6 +20,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DbHelper handler = new DbHelper(this);
+// Get access to the underlying writeable database
+        SQLiteDatabase db = handler.getWritableDatabase();
+// Query for items from the database and get a cursor back
+        Cursor poiCursor = db.rawQuery("SELECT * FROM POIstorer", null);
+
+        // Find ListView to populate
+        ListView lvItems = (ListView) findViewById(R.id.listPOI);
+// Setup cursor adapter using cursor from last step
+        poiAdapter todoAdapter = new poiAdapter(this, poiCursor, 0);
+// Attach cursor adapter to the ListView
+        lvItems.setAdapter(todoAdapter);
         /*findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onNewPOIClick(View v) {
-        EditText q = (EditText) findViewById(R.id.editText);
+        EditText q = (EditText) findViewById(R.id.createPOIName);
         String newPOIname = q.getText().toString();
         if(newPOIname.equals("")) {
             Toast.makeText(getBaseContext(), "Please enter a name", Toast.LENGTH_SHORT).show();

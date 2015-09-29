@@ -1,25 +1,28 @@
 package com.example.sumeetbabu.poiapp;
 
+import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
-public class create_poi extends AppCompatActivity {
+public class create_poi extends Activity {
 
+    Bitmap bTemp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,13 @@ public class create_poi extends AppCompatActivity {
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         TextView locationField = (TextView) findViewById(R.id.LocationField);
         locationField.setText(location.getLatitude() + ", " + location.getLongitude());
+        //Saved picture
+        if(savedInstanceState != null) {
+            bTemp = savedInstanceState.getParcelable("bitmap");
+            ImageView imv = (ImageView) findViewById(R.id.ImageThumb);
+            imv.setImageBitmap(bTemp);
+        }
+
 
 
     }
@@ -72,7 +82,32 @@ public class create_poi extends AppCompatActivity {
     }
 
     public void onCreatePOIClick(View view) {
+       DbHelper mDbHelper = new DbHelper(getBaseContext());
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        TextView name1 = (TextView) findViewById(R.id.NameField);
+        String name = name1.getText().toString();
+        TextView creator1 = (TextView) findViewById(R.id.CreatorField);
+        String creator = creator1.getText().toString();
+        //DateFormat format = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+        TextView dt = (TextView) findViewById(R.id.DateField);
+        String date = dt.getText().toString();
+        TextView location1 = (TextView) findViewById(R.id.LocationField);
+        String location = location1.getText().toString();
+        Bitmap photo = ((BitmapDrawable)((ImageView)findViewById(R.id.ImageThumb)).getDrawable()).getBitmap();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        byte[] bArray = bos.toByteArray();
+        values.put("name", name);
+        values.put("creator", creator);
+        values.put("location", location);
+        values.put("date", date);
+        values.put("image", bArray);
+        db.insert("POIstorer", null, values);
+        db.close();
 
+        Intent tent = new Intent(this, MainActivity.class);
+        startActivity(tent);
     }
 
     @Override
@@ -80,13 +115,20 @@ public class create_poi extends AppCompatActivity {
         if (requestCode == 1) {
             if(resultCode == RESULT_OK){
                 Bundle extras = data.getExtras();
-                Bitmap bitmap = (Bitmap) extras.get("data");
+                bTemp = (Bitmap) extras.get("data");
+                //Bitmap resized = Bitmap.createScaledBitmap(bTemp, (int)(bTemp.getWidth()*0.5), (int)(bTemp.getHeight()*0.5), true);
                 ImageView imv = (ImageView) findViewById(R.id.ImageThumb);
-                imv.setImageBitmap(bitmap);
+                imv.setImageBitmap(bTemp);
             }
             if (resultCode == RESULT_CANCELED) {
                 //Write your code if there's no result
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle toSave) {
+        super.onSaveInstanceState(toSave);
+        toSave.putParcelable("bitmap", bTemp);
     }
 }
