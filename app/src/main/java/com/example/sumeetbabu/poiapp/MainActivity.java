@@ -1,5 +1,6 @@
 package com.example.sumeetbabu.poiapp;
 
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,10 +11,14 @@ import android.widget.*;
 import android.location.*;
 import android.app.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends Activity {
 
-    LocationManager locationManager;
-    LocationListener locationListener;
+    //LocationManager locationManager;
+    Location location;
     //RelativeLayout lay;
 
     @Override
@@ -22,16 +27,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         DbHelper handler = new DbHelper(this);
-// Get access to the underlying writeable database
         SQLiteDatabase db = handler.getWritableDatabase();
-// Query for items from the database and get a cursor back
         Cursor poiCursor = db.rawQuery("SELECT * FROM POIstorer", null);
 
-        // Find ListView to populate
         ListView lvItems = (ListView) findViewById(R.id.listPOI);
-// Setup cursor adapter using cursor from last step
         poiAdapter todoAdapter = new poiAdapter(this, poiCursor, 0);
-// Attach cursor adapter to the ListView
         lvItems.setAdapter(todoAdapter);
         /*findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,24 +72,27 @@ public class MainActivity extends Activity {
     public void onNewPOIClick(View v) {
         EditText q = (EditText) findViewById(R.id.createPOIName);
         String newPOIname = q.getText().toString();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        try {
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        } catch(final SecurityException ex) {
+            Toast.makeText(getBaseContext(), "Sorry, application does not have permissions to get the location.", Toast.LENGTH_SHORT).show();
+        }
         if(newPOIname.equals("")) {
             Toast.makeText(getBaseContext(), "Please enter a name", Toast.LENGTH_SHORT).show();
         }
         else {
             Intent i = new Intent(this, create_poi.class);
             i.putExtra("newPOIname", newPOIname);
+            i.putExtra("date", dateFormat.format(date));
+            i.putExtra("location", location.getLatitude() + ", " + location.getLongitude());
             startActivity(i);
             // Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
         }
     }
 
-    /*public void printGPS(double lat, double lon) {
-        Log.i("GPS Coords", (lat + "   " + lon));
-        TextView GPSText = (TextView)findViewById(R.id.GPSCoords);
-        GPSText.setText("Latitude: " + lat + "   Longitude:" + lon);
-
-
-    }*/
 
 
 

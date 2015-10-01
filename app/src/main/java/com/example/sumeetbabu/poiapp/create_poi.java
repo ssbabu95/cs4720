@@ -35,19 +35,21 @@ public class create_poi extends Activity {
         name.setText(POIname);
         //Set Date field
         TextView dateField = (TextView) findViewById(R.id.DateField);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date date = new Date();
-        dateField.setText(dateFormat.format(date));
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        //Date date = new Date();
+        dateField.setText(intent.getExtras().getString("date"));
         //Set Location field
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        //LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         TextView locationField = (TextView) findViewById(R.id.LocationField);
-        locationField.setText(location.getLatitude() + ", " + location.getLongitude());
+        locationField.setText(intent.getExtras().getString("location"));
         //Saved picture
         if(savedInstanceState != null) {
-            bTemp = savedInstanceState.getParcelable("bitmap");
-            ImageView imv = (ImageView) findViewById(R.id.ImageThumb);
-            imv.setImageBitmap(bTemp);
+                bTemp = savedInstanceState.getParcelable("bitmap");
+            if(bTemp != null) {
+                ImageView imv = (ImageView) findViewById(R.id.ImageThumb);
+                imv.setImageBitmap(bTemp);
+            }
         }
 
 
@@ -116,8 +118,12 @@ public class create_poi extends Activity {
             if(resultCode == RESULT_OK){
                 Bundle extras = data.getExtras();
                 bTemp = (Bitmap) extras.get("data");
-                //Bitmap resized = Bitmap.createScaledBitmap(bTemp, (int)(bTemp.getWidth()*0.5), (int)(bTemp.getHeight()*0.5), true);
+                Bitmap resized = Bitmap.createScaledBitmap(bTemp, (int)(bTemp.getWidth()*0.2), (int)(bTemp.getHeight()*0.2), true);
                 ImageView imv = (ImageView) findViewById(R.id.ImageThumb);
+                //android.view.ViewGroup.LayoutParams layoutParams = imv.getLayoutParams();
+                //layoutParams.width = 80;
+                //layoutParams.height = 80;
+                //imv.setLayoutParams(layoutParams);
                 imv.setImageBitmap(bTemp);
             }
             if (resultCode == RESULT_CANCELED) {
