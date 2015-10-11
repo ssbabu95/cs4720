@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
@@ -96,20 +97,27 @@ public class create_poi extends Activity {
         String date = dt.getText().toString();
         TextView location1 = (TextView) findViewById(R.id.LocationField);
         String location = location1.getText().toString();
-        Bitmap photo = ((BitmapDrawable)((ImageView)findViewById(R.id.ImageThumb)).getDrawable()).getBitmap();
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
-        byte[] bArray = bos.toByteArray();
-        values.put("name", name);
-        values.put("creator", creator);
-        values.put("location", location);
-        values.put("date", date);
-        values.put("image", bArray);
-        db.insert("POIstorer", null, values);
-        db.close();
+        Drawable pic = ((ImageView)findViewById(R.id.ImageThumb)).getDrawable();
+        if(pic != null) {
+            Bitmap photo = ((BitmapDrawable)pic).getBitmap();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            byte[] bArray = bos.toByteArray();
+            values.put("name", name);
+            values.put("creator", creator);
+            values.put("location", location);
+            values.put("date", date);
+            values.put("image", bArray);
+            db.insert("POIstorer", null, values);
+            db.close();
+            Intent tent = new Intent(this, MainActivity.class);
+            startActivity(tent);
+            finish();
+        }
+        else {
+            Toast.makeText(getBaseContext(), "Please take a photo", Toast.LENGTH_SHORT).show();
+        }
 
-        Intent tent = new Intent(this, MainActivity.class);
-        startActivity(tent);
     }
 
     @Override
