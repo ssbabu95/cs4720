@@ -10,7 +10,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -98,7 +97,14 @@ public class create_poi extends Activity {
         TextView location1 = (TextView) findViewById(R.id.LocationField);
         String location = location1.getText().toString();
         Drawable pic = ((ImageView)findViewById(R.id.ImageThumb)).getDrawable();
-        if(pic != null) {
+        if(pic == null) {
+            Toast.makeText(getBaseContext(), "Please take a photo", Toast.LENGTH_SHORT).show();
+        }
+        else if(creator.equals("")) {
+            Toast.makeText(getBaseContext(), "Please enter a creator", Toast.LENGTH_SHORT).show();
+
+        }
+        else {
             Bitmap photo = ((BitmapDrawable)pic).getBitmap();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.PNG, 100, bos);
@@ -112,10 +118,8 @@ public class create_poi extends Activity {
             db.close();
             Intent tent = new Intent(this, MainActivity.class);
             startActivity(tent);
+            MainActivity.fa.finish();
             finish();
-        }
-        else {
-            Toast.makeText(getBaseContext(), "Please take a photo", Toast.LENGTH_SHORT).show();
         }
 
     }

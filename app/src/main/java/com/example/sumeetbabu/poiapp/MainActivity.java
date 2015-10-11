@@ -20,13 +20,14 @@ public class MainActivity extends Activity {
 
     //LocationManager locationManager;
     Location location;
+    public static Activity fa;
     //RelativeLayout lay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        fa = this;
         DbHelper handler = new DbHelper(this);
         SQLiteDatabase db = handler.getWritableDatabase();
         Cursor poiCursor = db.rawQuery("SELECT * FROM POIstorer", null);
@@ -90,7 +91,7 @@ public class MainActivity extends Activity {
             i.putExtra("date", dateFormat.format(date));
             i.putExtra("location", location.getLatitude() + ", " + location.getLongitude());
             startActivity(i);
-            finish();
+            //finish();
             // Toast.makeText(getBaseContext(), text, Toast.LENGTH_SHORT).show();
         }
     }
