@@ -130,8 +130,11 @@ public class create_poi extends Activity {
             if(resultCode == RESULT_OK){
                 Bundle extras = data.getExtras();
                 bTemp = (Bitmap) extras.get("data");
-                Bitmap resized = Bitmap.createScaledBitmap(bTemp, (int)(bTemp.getWidth()*0.2), (int)(bTemp.getHeight()*0.2), true);
+                Bitmap resized = Bitmap.createScaledBitmap(bTemp, 80, 80, true);
                 ImageView imv = (ImageView) findViewById(R.id.ImageThumb);
+                //ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) imv.getLayoutParams();
+                //params.height = 120;
+                //imv.setLayoutParams(params);
                 //android.view.ViewGroup.LayoutParams layoutParams = imv.getLayoutParams();
                 //layoutParams.width = 80;
                 //layoutParams.height = 80;
